@@ -883,10 +883,14 @@
                         </div>
                         <div class="form-group">
                             <label for="content">Content</label>
-                            <p-editor [(ngModel)]="selectedTutorial.content" [style]="{ height: '320px' }"
-                                [ngModelOptions]="{standalone: true}" required></p-editor>
+                            <div class="editor-container">
+                                <p-editor [(ngModel)]="selectedTutorial.content" class="fixed-height-editor"
+                                    [ngModelOptions]="{standalone: true}" required></p-editor>
+                            </div>
 
                         </div>
+
+
                     </form>
                 </nb-card-body>
                 <nb-card-footer>

@@ -69,4 +69,36 @@
     height: auto;
   }
 
+  .editor-container {
+    max-width: 600px; /* Set the maximum width */
+    margin: 0 auto; /* Center the editor container */
+}
+
+.fixed-width-editor {
+    width: 100%; /* Ensure it takes up the full width of its container */
+    height: 300px; /* Set the desired height */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+@media (max-width: 768px) {
+    .editor-container {
+        max-width: 90%; /* Adjust the max-width for smaller screens */
+    }
+
+    .fixed-width-editor {
+        height: 200px; /* Adjust height for smaller screens if needed */
+    }
+}
+
+@media (max-width: 576px) {
+    .fixed-width-editor {
+        height: 150px; /* Further adjust height for very small screens */
+    }
+}
+
+
+
+
+
+
 
