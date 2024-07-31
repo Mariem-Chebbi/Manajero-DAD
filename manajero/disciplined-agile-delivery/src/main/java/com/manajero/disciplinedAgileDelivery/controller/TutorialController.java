@@ -31,7 +31,7 @@ public class TutorialController {
     }
 
     @PutMapping("/edit")
-    public void deleteTutorial (@RequestBody Tutorial tutorial){
+    public void editTutorial (@RequestBody Tutorial tutorial){
         this.iTutorialService.editTutorial(tutorial);
     }
 }

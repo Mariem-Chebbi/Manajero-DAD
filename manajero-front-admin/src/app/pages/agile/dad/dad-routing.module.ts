@@ -16,6 +16,14 @@ const routes: Routes = [{
         path: '', loadChildren: () => import('./project/project.module')
             .then(m => m.ProjectModule),
     },
+    {
+        path: '', loadChildren: () => import('./features/features.module')
+            .then(m => m.FeaturesModule),
+    },
+    {
+        path: '', loadChildren: () => import('./release/release.module')
+            .then(m => m.ReleaseModule),
+    },
     ],
 }];
 

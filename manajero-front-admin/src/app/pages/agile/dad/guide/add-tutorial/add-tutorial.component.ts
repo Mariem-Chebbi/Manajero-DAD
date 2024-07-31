@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TutorialService } from '../../service/tutorial.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'ngx-add-tutorial',
@@ -12,7 +13,11 @@ export class AddTutorialComponent implements OnInit {
   addForm!: FormGroup;
   tutorial: any = {}
 
-  constructor(private tutorialService: TutorialService) { }
+  constructor(
+    private tutorialService: TutorialService,
+    private router: Router
+
+  ) { }
 
   ngOnInit(): void {
     this.addForm = new FormGroup({
@@ -34,6 +39,7 @@ export class AddTutorialComponent implements OnInit {
     this.tutorialService.add(this.tutorial).subscribe(
       (data) => {
         console.log("success");
+        this.router.navigate(['/pages/agile/dad']);
       }
     )
     console.log(this.tutorial);
