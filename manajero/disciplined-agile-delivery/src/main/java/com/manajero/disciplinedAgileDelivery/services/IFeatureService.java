@@ -9,6 +9,6 @@ public interface IFeatureService {
     Feature addFeature(Feature feature,String id);
     Feature editFeature(Feature feature);
     List<Feature> getAllFeatures(String id);
-
+    List<Feature> getFeaturesByRelease(String id);
     void deleteFeature(String id);
 }

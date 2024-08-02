@@ -33,4 +33,9 @@ public class FeatureController {
     public void deleteFeature (@PathVariable String id){
         iFeatureService.deleteFeature(id);
     }
+
+    @GetMapping("/get/release/{id}")
+    public List<Feature> getFeaturesByRelease(@PathVariable String id){
+        return iFeatureService.getFeaturesByRelease(id);
+    }
 }

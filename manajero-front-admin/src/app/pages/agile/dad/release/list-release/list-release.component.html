@@ -1,11 +1,11 @@
 <nb-card>
     <nb-card-header>
-      Releases
+        Releases
     </nb-card-header>
-  
     <nb-card-body>
-      <ng2-smart-table [settings]="settings" >
-      </ng2-smart-table>
+        <ng2-smart-table [settings]="settings" [source]="releaseList" (createConfirm)="onCreateConfirm($event)"
+            (editConfirm)="onSaveConfirm($event)" (deleteConfirm)="onDeleteConfirm($event)"
+            (userRowSelect)="onRowClick($event)">
+        </ng2-smart-table>
     </nb-card-body>
-  </nb-card>
-  
+</nb-card>

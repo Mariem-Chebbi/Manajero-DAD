@@ -29,4 +29,8 @@ export class FeatureService {
         return this.http.put<any>(`${this.apiurl}/edit`, feature);
     }
 
+    public getByRelease(id): Observable<any> {
+        return this.http.get<any>(`${this.apiurl}/get/release/${id}`);
+    }
+
 }

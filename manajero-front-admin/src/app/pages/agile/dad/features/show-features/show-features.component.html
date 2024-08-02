@@ -1,6 +1,6 @@
 <div class="container">
     <div class="m-2 d-flex justify-content-end">
-        <button nbButton hero status="info" (click)="goToReleaseBacklog()">Release Backlog</button>
+        <button nbButton hero status="info" (click)="goToReleaseBacklog()">Releases</button>
     </div>
     <div class="main-content">
         <div class="col feature-list" [ngClass]="{ 'col-12': !selectedItem, 'col-lg-8': selectedItem }">
@@ -31,7 +31,7 @@
                         <form [formGroup]="addForm" (ngSubmit)="addFeatures()">
                             <input type="text" nbInput fullWidth status="info" placeholder="Enter new feature"
                                 formControlName="title" />
-                            <button nbButton hero status="info" type="submit">Save</button>
+                            <button nbButton hero status="info" type="submit" [disabled]="addForm.invalid">Save</button>
                             <button nbButton status="basic" type="button" (click)="cancelNewItem()">Cancel</button>
                         </form>
                     </div>
@@ -40,7 +40,8 @@
         </div>
         <div *ngIf="selectedItem" class="col details-view"
             [ngClass]="{ 'col-lg-4': selectedItem, 'col-12': !selectedItem }">
-            <ngx-details-feature [item]="selectedItem" (close)="deselectItem()"></ngx-details-feature>
+            <ngx-details-feature [item]="selectedItem" [projectId]="projectId"
+                (close)="deselectItem()"></ngx-details-feature>
         </div>
     </div>
 </div>

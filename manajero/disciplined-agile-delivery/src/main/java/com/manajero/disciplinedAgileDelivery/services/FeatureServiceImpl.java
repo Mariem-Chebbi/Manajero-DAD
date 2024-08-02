@@ -10,7 +10,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class FeatureService implements IFeatureService{
+public class FeatureServiceImpl implements IFeatureService{
     private FeatureRepository featureRepository;
     private ProjectRepository projectRepository;
 
@@ -29,6 +29,11 @@ public class FeatureService implements IFeatureService{
     @Override
     public List<Feature> getAllFeatures(String id) {
         return featureRepository.findAllByProject_ProjectId(id);
+    }
+
+    @Override
+    public List<Feature> getFeaturesByRelease(String id) {
+        return featureRepository.findAllByRelease_ReleaseId(id);
     }
 
     @Override

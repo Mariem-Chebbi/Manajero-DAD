@@ -63,7 +63,7 @@ export class ShowFeaturesComponent implements OnInit {
       (data) => {
         this.newItem = '';
         this.showNewItemInput = false;
-        window.location.reload();
+        this.showFeatures();
         console.log("success !")
       }
     )

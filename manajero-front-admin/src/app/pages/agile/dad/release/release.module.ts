@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NbBadgeModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbIconModule, NbInputModule, NbStepperModule } from '@nebular/theme';
+import { NbBadgeModule, NbButtonModule, NbCardModule, NbDatepickerModule, NbIconModule, NbInputModule, NbSelectModule, NbStepperModule, NbToastrModule } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { PickListModule } from 'primeng/picklist';
@@ -10,6 +10,13 @@ import { ReleaseRoutingModule, routedComponents } from './release-routing.module
 import { AddReleaseComponent } from './add-release/add-release.component';
 import { AssignReleaseComponent } from './assign-release/assign-release.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { DatepickerEditorComponent } from './datepicker-editor/datepicker-editor.component';
+import { DetailsButtonComponent } from './details-button/details-button.component';
+import { DetailsReleaseComponent } from './details-release/details-release.component';
+import { TagModule } from 'primeng/tag';
+import { DataViewModule } from 'primeng/dataview';
+import { FeaturesModule } from '../features/features.module';
+import { config } from 'rxjs';
 
 
 
@@ -30,7 +37,15 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
         PickListModule,
         OrderListModule,
         NbBadgeModule,
-        Ng2SmartTableModule
+        Ng2SmartTableModule,
+        DataViewModule,
+        TagModule,
+        NbSelectModule,
+        FeaturesModule,
+        NbToastrModule.forRoot(),
+
+
+
 
 
 
@@ -40,7 +55,11 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
         ...routedComponents,
         ListReleaseComponent,
         AddReleaseComponent,
-        AssignReleaseComponent
+        AssignReleaseComponent,
+        DatepickerEditorComponent,
+        DetailsButtonComponent,
+        DetailsReleaseComponent,
+
     ],
 })
 export class ReleaseModule { }
