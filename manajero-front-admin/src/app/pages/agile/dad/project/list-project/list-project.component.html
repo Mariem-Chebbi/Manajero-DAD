@@ -5,7 +5,7 @@
                 <h1>List of Projects</h1>
                 <div class="row">
                     <div class="col-md-3" *ngFor="let project of listProject">
-                        <a [routerLink]="['/pages/agile/dad/features/list',project.projectId]">
+                        <a [routerLink]="['/pages/agile/dad/dashboard/',project.projectId]">
                             <nb-card accent="primary" status="warning">
                                 <nb-card-header>{{ project.title }}
                                     <nb-badge text="{{ project.status }}" status="info" position="top right"></nb-badge>

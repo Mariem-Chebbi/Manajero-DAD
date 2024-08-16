@@ -1,0 +1,32 @@
+<button class="my-3" nbButton hero status="primary" (click)="goToTheMethod()">DAD Method</button>
+<div class="row">
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>Feature Status Distribution</nb-card-header>
+            <nb-card-body>
+                <ngx-charts-pie-chart [scheme]="colorScheme" [results]="" [doughnut]="false" [legend]="showLegend"
+                    [labels]="true">
+                </ngx-charts-pie-chart>
+                <div echarts [options]="options1" class="echart"></div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-6">
+        <nb-card>
+            <nb-card-header>Release Predictability</nb-card-header>
+            <nb-card-body>
+                <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="results2" [xAxis]="showXAxis"
+                    [yAxis]="showYAxis" [legend]="showLegend" [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+                </ngx-charts-bar-vertical>
+            </nb-card-body>
+        </nb-card>
+    </div>
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-header>the progress of releases</nb-card-header>
+            <nb-card-body>
+                <div echarts [options]="options2" class="echart"></div>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

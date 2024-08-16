@@ -20,5 +20,6 @@ public class Tutorial {
     private String content;
     private LocalDateTime creationDate;
     private LocalDateTime lastUpdated;
+    private Boolean isArchived;
 
 }

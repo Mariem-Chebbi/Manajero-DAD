@@ -33,4 +33,27 @@ export class FeatureService {
         return this.http.get<any>(`${this.apiurl}/get/release/${id}`);
     }
 
+    getStatusPercentages(projectId: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.apiurl}/status-percentages/${projectId}`);
+    }
+
+    public assign(features, iterationId): Observable<any> {
+        return this.http.put<any>(`${this.apiurl}/assign/${iterationId}`, features);
+    }
+
+    public Unassign(features): Observable<any> {
+        return this.http.put<any>(`${this.apiurl}/Unassign`, features);
+    }
+
+    public getByIteration(id): Observable<any> {
+        return this.http.get<any>(`${this.apiurl}/get/iteration/${id}`);
+    }
+
+    public archive(id): Observable<any> {
+        return this.http.put<any>(`${this.apiurl}/archive/${id}`, null);
+    }
+
+    public restore(id): Observable<any> {
+        return this.http.put<any>(`${this.apiurl}/restore/${id}`, null);
+    }
 }

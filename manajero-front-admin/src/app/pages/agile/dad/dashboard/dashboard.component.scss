@@ -1,0 +1,83 @@
+@import '../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  ngx-d3-bar,
+  ngx-d3-pie,
+  ngx-d3-advanced-pie,
+  ngx-d3-area-stack,
+  ngx-d3-line,
+  ngx-d3-polar{
+    display: block;
+    width: 100%;
+    height: nb-theme(card-height-medium);
+
+    ::ng-deep {
+      .pie-label {
+        fill: nb-theme(text-basic-color);
+      }
+
+      text {
+        fill: nb-theme(text-hint-color);
+      }
+
+      .chart-legend {
+        .legend-labels {
+          background: nb-theme(background-basic-color-2);
+        }
+        .legend-label {
+          color: nb-theme(text-hint-color);
+          .active .legend-label-text {
+            color: nb-theme(text-basic-color);
+          }
+        }
+      }
+
+      .total-value,
+      .item-value,
+      .item-percent {
+        line-height: 1.25;
+      }
+
+      .legend-items {
+        overflow-y: hidden;
+      }
+    }
+  }
+}
+  @include nb-install-component() {
+    ngx-chartjs-pie,
+    ngx-chartjs-bar,
+    ngx-chartjs-line,
+    ngx-chartjs-multiple-xaxis,
+    ngx-chartjs-bar-horizontal,
+    ngx-chartjs-radar {
+      display: block;
+      height: nb-theme(card-height-medium);
+      width: 100%;
+  
+      ::ng-deep chart {
+        display: block;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  @include nb-install-component() {
+    ngx-echarts-pie,
+    ngx-echarts-bar,
+    ngx-echarts-line,
+    ngx-echarts-multiple-xaxis,
+    ngx-echarts-area-stack,
+    ngx-echarts-bar-animation,
+    ngx-echarts-radar {
+      display: block;
+      height: nb-theme(card-height-medium);
+      width: 100%;
+    }
+  
+    ::ng-deep .echart {
+      height: 100%;
+      width: 100%;
+    }
+  }

@@ -20,4 +20,6 @@ public class Release {
     private String releaseDate;
     private String description;
     private Project project;
+    private Boolean isArchived;
+
 }

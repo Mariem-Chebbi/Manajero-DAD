@@ -34,4 +34,14 @@ public class TutorialController {
     public void editTutorial (@RequestBody Tutorial tutorial){
         this.iTutorialService.editTutorial(tutorial);
     }
+
+    @PutMapping("/archive/{id}")
+    public void archiveTutorial(@PathVariable String id) {
+        this.iTutorialService.archiveTutorial(id);
+    }
+
+    @PutMapping("/restore/{id}")
+    public void restoreTutorial(@PathVariable String id) {
+        this.iTutorialService.restoreTutorial(id);
+    }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FeatureService } from '../../service/feature.service';
 import { ReleaseService } from '../../service/release.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'ngx-details-feature',
@@ -16,21 +17,24 @@ export class DetailsFeatureComponent implements OnInit {
   releaseList: any[] = [];
   @Input() projectId: string;
   release: any;
+  userList?: any[];
 
   constructor(
     private featureService: FeatureService,
-    private releaseService: ReleaseService
+    private releaseService: ReleaseService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
     this.getAllReleases();
+    this.getUsers();
   }
 
   onEditTitle() {
     this.featureService.edit(this.item).subscribe(
       (data) => {
         this.editTitle = !this.editTitle
-        console.log("success")
+        //console.log("success")
       }
     )
   }
@@ -39,7 +43,7 @@ export class DetailsFeatureComponent implements OnInit {
     this.featureService.edit(this.item).subscribe(
       (data) => {
         this.editDescription = !this.editDescription
-        console.log("success")
+        //console.log("success")
       }
     )
   }
@@ -60,7 +64,7 @@ export class DetailsFeatureComponent implements OnInit {
         this.item.release = this.release
         this.featureService.edit(this.item).subscribe(
           (data) => {
-            console.log(data)
+            //console.log(data)
           }
         )
       }
@@ -82,7 +86,7 @@ export class DetailsFeatureComponent implements OnInit {
   }
 
   onDelete() {
-    this.featureService.delete(this.item.featureId).subscribe(
+    this.featureService.archive(this.item.featureId).subscribe(
       (data) => {
         window.location.reload();
       }
@@ -109,5 +113,37 @@ export class DetailsFeatureComponent implements OnInit {
     if (this.item && this.item.release) {
       this.item.release.releaseId = value;
     }
+  }
+
+  get userId(): any {
+    return this.item?.user?._id;
+  }
+
+  set userId(value: any | undefined) {
+    if (this.item && this.item.user) {
+      this.item.user = value;
+    }
+  }
+
+  getUsers() {
+    this.userService.getusers(this.projectId).subscribe(
+      (data) => {
+        console.log(data)
+        this.userList = data
+      }
+    )
+  }
+
+  onUserchange(event) {
+    this.userService.getById(event).subscribe(
+      (data) => {
+        this.item.user = data
+        this.featureService.edit(this.item).subscribe(
+          (data) => {
+            console.log(data)
+          }
+        )
+      }
+    )
   }
 }

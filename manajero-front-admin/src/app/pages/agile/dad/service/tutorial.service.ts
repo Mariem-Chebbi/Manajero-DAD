@@ -26,4 +26,12 @@ export class TutorialService {
   public edit(tutorial: any): Observable<any> {
     return this.http.put<any>(`${this.apiurl}/edit`, tutorial);
   }
+
+  public archive(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/archive/${id}`,null);
+  }
+
+  public restore(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/restore/${id}`,null);
+  }
 }

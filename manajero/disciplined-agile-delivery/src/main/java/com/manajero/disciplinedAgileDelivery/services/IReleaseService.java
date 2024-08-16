@@ -10,6 +10,8 @@ public interface IReleaseService {
     Release editRelease(Release release);
     void deleteRelease(String id);
     Release getReleaseById (String id);
-
+    double calculateReleasePredictability(String projectId);
+    void archiveRelease(String id);
+    void restoreRelease(String id);
 
 }

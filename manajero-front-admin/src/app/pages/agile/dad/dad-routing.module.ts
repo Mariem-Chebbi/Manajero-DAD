@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DadComponent } from './dad.component';
-import { GuideeComponent } from './guide/guidee.component';
+import { DadStepsComponent } from './dad-steps/dad-steps.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ListArchiveComponent } from './archives/list-archive/list-archive.component';
 
 const routes: Routes = [{
     path: '',
@@ -25,7 +27,19 @@ const routes: Routes = [{
             .then(m => m.ReleaseModule),
     },
     ],
-}];
+}, {
+    path: 'steps/:id',
+    component: DadStepsComponent,
+},
+{
+    path: 'dashboard/:id',
+    component: DashboardComponent,
+},
+{
+    path: 'archives/:id',
+    component: ListArchiveComponent,
+}
+];
 
 @NgModule({
     imports: [RouterModule.forChild(routes)],

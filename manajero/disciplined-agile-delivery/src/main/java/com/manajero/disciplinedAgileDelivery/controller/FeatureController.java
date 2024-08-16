@@ -1,5 +1,6 @@
 package com.manajero.disciplinedAgileDelivery.controller;
 
+import com.manajero.disciplinedAgileDelivery.dto.StatusPercentage;
 import com.manajero.disciplinedAgileDelivery.models.Feature;
 import com.manajero.disciplinedAgileDelivery.services.IFeatureService;
 import lombok.AllArgsConstructor;
@@ -38,4 +39,35 @@ public class FeatureController {
     public List<Feature> getFeaturesByRelease(@PathVariable String id){
         return iFeatureService.getFeaturesByRelease(id);
     }
+
+    @GetMapping("/status-percentages/{projectId}")
+    public List<StatusPercentage> getStatusPercentages(@PathVariable String projectId) {
+        return iFeatureService.calculateStatusPercentages(projectId);
+    }
+
+    @PutMapping ("/assign/{iterationId}")
+    public void assignFeaturesToIteration (@RequestBody List<Feature> features,@PathVariable String iterationId){
+         iFeatureService.assignFeaturesToIteration(features,iterationId);
+    }
+
+    @PutMapping ("/Unassign")
+    public void UnassignFeaturesToIteration (@RequestBody List<Feature> features){
+        iFeatureService.UnassignFeaturesToIteration(features);
+    }
+
+    @GetMapping("/get/iteration/{id}")
+    public List<Feature> getFeaturesByIteration(@PathVariable String id){
+        return iFeatureService.getFeaturesByIteration(id);
+    }
+
+    @PutMapping("/archive/{id}")
+    public void archive(@PathVariable String id) {
+        this.iFeatureService.archiveFeature(id);
+    }
+
+    @PutMapping("/restore/{id}")
+    public void restore(@PathVariable String id) {
+        this.iFeatureService.restoreFeature(id);
+    }
+
 }

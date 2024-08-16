@@ -41,8 +41,8 @@ export class ListReleaseComponent implements OnInit {
       status: {
         title: 'Status',
         type: 'string',
-        editable:false,
-        addable:false
+        editable: false,
+        addable: false
       },
       progres: {
         title: 'Progress',
@@ -96,7 +96,7 @@ export class ListReleaseComponent implements OnInit {
   getAllReleases() {
     this.releaseService.getAll(this.projectId).subscribe(
       (data) => {
-        this.releaseList = data
+        this.releaseList = data.filter(obj => obj.isArchived === false)
       },
       (error) => {
         console.error('Error fetching releases', error);
@@ -164,7 +164,7 @@ export class ListReleaseComponent implements OnInit {
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete this release?')) {
       const releaseToDelete = event.data;
-      this.releaseService.delete(releaseToDelete.releaseId).subscribe(
+      this.releaseService.archive(releaseToDelete.releaseId).subscribe(
         () => {
           event.confirm.resolve();
           this.getAllReleases();

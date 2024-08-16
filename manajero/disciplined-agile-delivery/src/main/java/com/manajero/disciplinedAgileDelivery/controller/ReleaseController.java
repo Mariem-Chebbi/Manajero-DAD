@@ -39,4 +39,19 @@ public class ReleaseController {
     public Release getReleasesById(@PathVariable String id){
         return iReleaseService.getReleaseById(id);
     }
+
+    @GetMapping("/predictability/{projectId}")
+    public double getReleasePredictability(@PathVariable String projectId) {
+        return iReleaseService.calculateReleasePredictability(projectId);
+    }
+
+    @PutMapping("/archive/{id}")
+    public void archive(@PathVariable String id) {
+        this.iReleaseService.archiveRelease(id);
+    }
+
+    @PutMapping("/restore/{id}")
+    public void restore(@PathVariable String id) {
+        this.iReleaseService.restoreRelease(id);
+    }
 }

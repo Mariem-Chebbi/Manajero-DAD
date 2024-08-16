@@ -40,7 +40,8 @@ import { DropdownModule } from 'primeng/dropdown';
         DetailsFeatureComponent
     ],
     exports: [
-        DetailsFeatureComponent
+        DetailsFeatureComponent,
+        ShowFeaturesComponent
     ]
 })
 export class FeaturesModule { }

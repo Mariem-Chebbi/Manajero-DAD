@@ -109,7 +109,7 @@ export class GuideComponent implements AfterViewInit {
   getTutorials() {
     this.tutorialService.gettutorial().subscribe(
       (data) => {
-        this.listTutorial = data
+        this.listTutorial = data.filter(obj => obj.isArchived === false);
       }
     )
   }
@@ -122,7 +122,7 @@ export class GuideComponent implements AfterViewInit {
 
 
   onDelete(id: string) {
-    this.tutorialService.deletetutorial(id).subscribe(
+    this.tutorialService.archive(id).subscribe(
       (res) => {
         console.log(res)
         window.location.reload();

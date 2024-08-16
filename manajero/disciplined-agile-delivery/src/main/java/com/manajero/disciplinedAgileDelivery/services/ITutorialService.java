@@ -10,4 +10,6 @@ public interface ITutorialService {
     List<Tutorial> getTutorials();
     void deleteTutorial(String id);
     Tutorial editTutorial (Tutorial tutorial);
+    void archiveTutorial(String id);
+    void restoreTutorial(String id);
 }

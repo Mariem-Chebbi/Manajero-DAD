@@ -32,4 +32,16 @@ export class ReleaseService {
   public edit(release): Observable<any> {
     return this.http.put<any>(`${this.apiurl}/edit`, release);
   }
+
+  getReleasePredictability(projectId: string): Observable<number> {
+    return this.http.get<number>(`${this.apiurl}/predictability/${projectId}`);
+  }
+
+  public archive(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/archive/${id}`,null);
+  }
+
+  public restore(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/restore/${id}`,null);
+  }
 }

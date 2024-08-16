@@ -1,5 +1,6 @@
 package com.manajero.disciplinedAgileDelivery.services;
 
+import com.manajero.disciplinedAgileDelivery.models.Objective;
 import com.manajero.disciplinedAgileDelivery.models.Tutorial;
 import com.manajero.disciplinedAgileDelivery.repository.TutorialRepository;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ public class TutorialServiceImpl implements ITutorialService {
     private TutorialRepository tutorialRepository;
 
     public Tutorial addTutorial(Tutorial tutorial) {
+        tutorial.setIsArchived(false);
         return tutorialRepository.save(tutorial);
     }
 
@@ -28,5 +30,19 @@ public class TutorialServiceImpl implements ITutorialService {
     @Override
     public Tutorial editTutorial(Tutorial tutorial) {
         return tutorialRepository.save(tutorial);
+    }
+
+    @Override
+    public void archiveTutorial(String id) {
+        Tutorial tutorial = tutorialRepository.findById(id).orElse(null);
+        tutorial.setIsArchived(true);
+        tutorialRepository.save(tutorial);
+    }
+
+    @Override
+    public void restoreTutorial(String id) {
+        Tutorial tutorial = tutorialRepository.findById(id).orElse(null);
+        tutorial.setIsArchived(false);
+        tutorialRepository.save(tutorial);
     }
 }

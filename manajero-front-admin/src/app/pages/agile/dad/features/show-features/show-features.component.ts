@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FeatureService } from '../../service/feature.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,6 +18,7 @@ export class ShowFeaturesComponent implements OnInit {
   addForm: FormGroup;
   feature: any = {};
   selectedItem: any = null;
+
 
 
   constructor(
@@ -49,8 +50,8 @@ export class ShowFeaturesComponent implements OnInit {
   showFeatures() {
     this.featureService.getAll(this.projectId).subscribe(
       (data) => {
-        this.featureList = data
-        console.log(data)
+        this.featureList = data.filter(feature => feature.isArchived === false)
+        //console.log(data)
       }
     )
   }
@@ -64,7 +65,7 @@ export class ShowFeaturesComponent implements OnInit {
         this.newItem = '';
         this.showNewItemInput = false;
         this.showFeatures();
-        console.log("success !")
+        //console.log("success !")
       }
     )
   }

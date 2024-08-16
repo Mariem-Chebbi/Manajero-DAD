@@ -21,4 +21,7 @@ public class Feature {
     private String priority;
     private Project project;
     private Release release;
+    private User user;
+    private Iteration iteration;
+    private Boolean isArchived;
 }

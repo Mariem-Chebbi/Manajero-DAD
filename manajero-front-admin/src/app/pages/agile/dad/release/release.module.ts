@@ -61,5 +61,9 @@ import { config } from 'rxjs';
         DetailsReleaseComponent,
 
     ],
+    exports: [
+        ListReleaseComponent,
+        DetailsReleaseComponent
+    ]
 })
 export class ReleaseModule { }
