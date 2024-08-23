@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ReleaseRepository extends MongoRepository<Release,String> {
     List<Release> findAllByProject_ProjectId(String id);
+    long countByProjectProjectIdAndIsArchivedFalse(String projectId);
 
 }

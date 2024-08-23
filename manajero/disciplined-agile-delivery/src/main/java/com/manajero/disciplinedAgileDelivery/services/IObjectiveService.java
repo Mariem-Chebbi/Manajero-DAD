@@ -11,4 +11,6 @@ public interface IObjectiveService {
     void deleteObjectif(String id);
     void archiveObjective(String id);
     void restoreObjective(String id);
+    Objective getObjectifById (String id);
+
 }

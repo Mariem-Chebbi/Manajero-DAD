@@ -51,8 +51,8 @@ public class FeatureController {
     }
 
     @PutMapping ("/Unassign")
-    public void UnassignFeaturesToIteration (@RequestBody List<Feature> features){
-        iFeatureService.UnassignFeaturesToIteration(features);
+    public void UnassignFeaturesToIteration (@RequestBody Feature feature){
+        iFeatureService.UnassignFeaturesToIteration(feature);
     }
 
     @GetMapping("/get/iteration/{id}")

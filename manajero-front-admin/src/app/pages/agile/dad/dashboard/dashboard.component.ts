@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReleaseService } from '../service/release.service';
 import { NbThemeService } from '@nebular/theme';
 import { FeatureService } from '../service/feature.service';
+import { DashboardService } from '../service/dashboard.service';
 
 @Component({
   selector: 'ngx-dashboard',
@@ -25,13 +26,15 @@ export class DashboardComponent implements OnInit {
   options1: any;
   options2: any;
   type = 'pie';
+  statistics?: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private releaseService: ReleaseService,
     private featureService: FeatureService,
-    private theme: NbThemeService
+    private theme: NbThemeService,
+    private dashboardService: DashboardService
   ) {
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id'); // No conversion needed for string IDs
@@ -219,7 +222,7 @@ export class DashboardComponent implements OnInit {
       ];
     });
 
-
+    this.getStatistics();
   }
 
   goToTheMethod() {
@@ -249,6 +252,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getStatistics() {
+    this.dashboardService.get(this.projectId).subscribe(
+      (data) => {
+        this.statistics = data
+      }
+    )
+  }
 
 
 }

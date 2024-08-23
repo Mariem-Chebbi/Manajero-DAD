@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FeatureService } from '../../service/feature.service';
 import { ReleaseService } from '../../service/release.service';
 import { UserService } from '../../service/user.service';
+import { IterationService } from '../../service/iteration.service';
+import { ObjectiveService } from '../../service/objective.service';
 
 @Component({
   selector: 'ngx-details-feature',
@@ -18,16 +20,22 @@ export class DetailsFeatureComponent implements OnInit {
   @Input() projectId: string;
   release: any;
   userList?: any[];
+  iterationList?: any[];
+  objectivesList?: any[];
 
   constructor(
     private featureService: FeatureService,
     private releaseService: ReleaseService,
-    private userService: UserService
+    private userService: UserService,
+    private iterationService: IterationService,
+    private objectiveService: ObjectiveService
   ) { }
 
   ngOnInit(): void {
     this.getAllReleases();
     this.getUsers();
+    this.getIterations();
+    this.getObjectives();
   }
 
   onEditTitle() {
@@ -74,7 +82,7 @@ export class DetailsFeatureComponent implements OnInit {
   editFeature() {
     this.featureService.edit(this.item).subscribe(
       (data) => {
-        console.log("success")
+        //console.log("success")
       }
     )
   }
@@ -100,7 +108,7 @@ export class DetailsFeatureComponent implements OnInit {
   getAllReleases() {
     this.releaseService.getAll(this.projectId).subscribe(
       (data) => {
-        this.releaseList = data
+        this.releaseList = data.filter(obj => obj.isArchived === false)
       }
     )
   }
@@ -125,10 +133,30 @@ export class DetailsFeatureComponent implements OnInit {
     }
   }
 
+  get iterationId(): any {
+    return this.item?.iteration?.iterationId;
+  }
+
+  set iterationId(value: any | undefined) {
+    if (this.item && this.item.iteration) {
+      this.item.iteration = value;
+    }
+  }
+
+  get objectiveId(): any {
+    return this.item?.objective?.objectiveId;
+  }
+
+  set objectiveId(value: any | undefined) {
+    if (this.item && this.item.objective) {
+      this.item.objective = value;
+    }
+  }
+
   getUsers() {
     this.userService.getusers(this.projectId).subscribe(
       (data) => {
-        console.log(data)
+        //console.log(data)
         this.userList = data
       }
     )
@@ -140,6 +168,48 @@ export class DetailsFeatureComponent implements OnInit {
         this.item.user = data
         this.featureService.edit(this.item).subscribe(
           (data) => {
+            //console.log(data)
+          }
+        )
+      }
+    )
+  }
+
+  getIterations() {
+    this.iterationService.getAll(this.projectId).subscribe(
+      (data) => {
+        this.iterationList = data;
+      }
+    )
+  }
+
+  getObjectives() {
+    this.objectiveService.getAll(this.projectId).subscribe(
+      (data) => {
+        this.objectivesList = data.filter(obj => obj.isArchived === false);
+      }
+    )
+  }
+
+  onIterationChange(event) {
+    this.iterationService.getById(event).subscribe(
+      (data) => {
+        this.item.iteration = data
+        this.featureService.edit(this.item).subscribe(
+          (data) => {
+            //console.log(data)
+          }
+        )
+      }
+    )
+  }
+
+  onObjectiveChange(event) {
+    this.objectiveService.getById(event).subscribe(
+      (data) => {
+        this.item.objective = data
+        this.featureService.edit(this.item).subscribe(
+          (data) => {
             console.log(data)
           }
         )
@@ -147,3 +217,4 @@ export class DetailsFeatureComponent implements OnInit {
     )
   }
 }
+

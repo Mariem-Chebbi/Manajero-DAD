@@ -2,6 +2,7 @@ package com.manajero.disciplinedAgileDelivery.services;
 
 import com.manajero.disciplinedAgileDelivery.models.Feature;
 import com.manajero.disciplinedAgileDelivery.models.Release;
+import com.manajero.disciplinedAgileDelivery.repository.FeatureRepository;
 import com.manajero.disciplinedAgileDelivery.repository.ProjectRepository;
 import com.manajero.disciplinedAgileDelivery.repository.ReleaseRepository;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,13 @@ import java.util.List;
 public class ReleaseServiceImpl implements IReleaseService{
     private ReleaseRepository releaseRepository;
     private ProjectRepository projectRepository;
+    private FeatureRepository featureRepository;
 
     @Override
     public List<Release> getAllReleases(String idProject) {
+        for (Release release: releaseRepository.findAllByProject_ProjectId(idProject)){
+            this.calculateReleaseProgress(release);
+        }
         return releaseRepository.findAllByProject_ProjectId(idProject);
     }
 
@@ -46,7 +51,7 @@ public class ReleaseServiceImpl implements IReleaseService{
     public double calculateReleasePredictability(String projectId) {
         List<Release> releases = releaseRepository.findAllByProject_ProjectId(projectId);
         long onTimeReleases = releases.stream()
-                .filter(release -> "Released".equals(release.getStatus())) // Assuming status contains "On-Time" for successful releases
+                .filter(release -> "Released".equals(release.getStatus()) && release.getIsArchived() == false) // Assuming status contains "On-Time" for successful releases
                 .count();
 
         if (releases.isEmpty()) {
@@ -68,5 +73,23 @@ public class ReleaseServiceImpl implements IReleaseService{
         Release release = releaseRepository.findById(id).orElse(null);
         release.setIsArchived(false);
         releaseRepository.save(release);
+    }
+
+    @Override
+    public float calculateReleaseProgress(Release release) {
+        List<Feature> features = featureRepository.findAllByRelease_ReleaseId(release.getReleaseId());
+        long totalFeatures = features.size();
+        long completedFeatures = features.stream().filter(f -> "Done".equals(f.getStatus())).count();
+
+        if (totalFeatures == 0) {
+            return 0; // Avoid division by zero
+        }
+
+        // Cast to double for accurate division, multiply by 100, and round to 1 decimal place
+        float progress = (float) Math.round(((double) completedFeatures / totalFeatures) * 1000) / 10;
+
+        release.setProgres(progress);
+        releaseRepository.save(release);
+        return progress;
     }
 }

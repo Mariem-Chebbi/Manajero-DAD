@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { IterationService } from '../../service/iteration.service';
 import { ActivatedRoute } from '@angular/router';
-import { NbWindowService } from '@nebular/theme';
+import { NbDialogService, NbToastrService, NbWindowService } from '@nebular/theme';
 import { AddIterationComponent } from '../add-iteration/add-iteration.component';
 import { ListFeaturesIterationComponent } from '../list-features-iteration/list-features-iteration.component';
 import { FeatureService } from '../../service/feature.service';
+import { EditIterationComponent } from '../edit-iteration/edit-iteration.component';
 
 @Component({
   selector: 'ngx-list-iteration',
@@ -21,6 +22,9 @@ export class ListIterationComponent implements OnInit {
     private route: ActivatedRoute,
     private windowService: NbWindowService,
     private featureService: FeatureService,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService
+
   ) {
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id');
@@ -86,7 +90,23 @@ export class ListIterationComponent implements OnInit {
   }
 
   openWindowDetailsIteration(iteration) {
+    const windowRef = this.windowService.open(EditIterationComponent, {
+      title: 'Iteration details',
+      context: {
+        projectId: this.projectId,
+        iteration: iteration
+      },
+    });
 
+    windowRef.onClose.subscribe(data => {
+      if (data) {
+        if (data.deleted) {
+          this.listIterations = this.listIterations.filter(obj => obj.iterationId !== data.iterationId);
+        } else {
+          this.showIteration();
+        }
+      }
+    });
   }
 
   onSelect(item: any): void {
@@ -95,6 +115,20 @@ export class ListIterationComponent implements OnInit {
 
   deselectItem() {
     this.selectedItem = null;
+  }
+
+  unassignFeature(feature) {
+    if (confirm("Are you sure you want to unassign this feature?")) {
+      this.featureService.Unassign(feature).subscribe(
+        (data) => {
+          this.showIteration();
+          this.toastrService.success('Feature unassigned successfully!', 'Success');
+        },
+        (error) => {
+          this.toastrService.danger('Failed to unassign the feature.', 'Error');
+        }
+      );
+    }
   }
 
 

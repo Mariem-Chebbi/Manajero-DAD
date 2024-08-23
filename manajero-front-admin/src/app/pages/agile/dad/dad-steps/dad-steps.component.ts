@@ -46,6 +46,10 @@ export class DadStepsComponent implements OnInit {
     this.router.navigate(['/pages/agile/dad/archives/' + this.projectId]);
   }
 
+  goToTheDashboard(){
+    this.router.navigate(['/pages/agile/dad/dashboard/' + this.projectId]);
+
+  }
 
 
 

@@ -56,7 +56,22 @@
                         <div class="mb-2">Assign to</div>
                         <nb-select placeholder="Select member" [(selected)]="userId"
                             (selectedChange)="onUserchange($event)">
-                            <nb-option *ngFor="let collaboration of userList" [value]="collaboration.user._id">{{ collaboration.user.username
+                            <nb-option *ngFor="let collaboration of userList" [value]="collaboration.user._id">{{
+                                collaboration.user.username
+                                }}</nb-option>
+                        </nb-select>
+                        <div class="mb-2">Iteration</div>
+                        <nb-select placeholder="Select iteration" [(selected)]="iterationId"
+                            (selectedChange)="onIterationChange($event)">
+                            <nb-option *ngFor="let item of iterationList" [value]="item.iterationId">{{
+                                item.name
+                                }}</nb-option>
+                        </nb-select>
+                        <div class="mb-2">Objective</div>
+                        <nb-select placeholder="Select objective" [(selected)]="objectiveId"
+                            (selectedChange)="onObjectiveChange($event)">
+                            <nb-option *ngFor="let item of objectivesList" [value]="item.objectiveId">{{
+                                item.description
                                 }}</nb-option>
                         </nb-select>
                     </nb-card-body>

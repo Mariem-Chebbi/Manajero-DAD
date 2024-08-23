@@ -14,7 +14,7 @@ public interface IFeatureService {
     void deleteFeature(String id);
     List<StatusPercentage> calculateStatusPercentages(String projectId);
     void assignFeaturesToIteration (List<Feature> features, String iterationId);
-    void UnassignFeaturesToIteration (List<Feature> features);
+    void UnassignFeaturesToIteration (Feature feature);
     List<Feature> getFeaturesByIteration(String id);
     void archiveFeature(String id);
     void restoreFeature(String id);

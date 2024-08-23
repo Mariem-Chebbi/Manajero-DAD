@@ -1,6 +1,7 @@
 package com.manajero.disciplinedAgileDelivery.controller;
 
 import com.manajero.disciplinedAgileDelivery.models.Feature;
+import com.manajero.disciplinedAgileDelivery.models.Iteration;
 import com.manajero.disciplinedAgileDelivery.models.Objective;
 import com.manajero.disciplinedAgileDelivery.services.IObjectiveService;
 import lombok.AllArgsConstructor;
@@ -43,5 +44,10 @@ public class ObjectiveController {
     @PutMapping("/restore/{id}")
     public void restore(@PathVariable String id) {
         this.iObjectiveService.restoreObjective(id);
+    }
+
+    @GetMapping("/get/{id}")
+    public Objective getObjectiveById(@PathVariable String id){
+        return iObjectiveService.getObjectifById(id);
     }
 }

@@ -17,6 +17,7 @@ import { TagModule } from 'primeng/tag';
 import { DataViewModule } from 'primeng/dataview';
 import { FeaturesModule } from '../features/features.module';
 import { config } from 'rxjs';
+import { EditReleaseComponent } from './edit-release/edit-release.component';
 
 
 
@@ -59,6 +60,7 @@ import { config } from 'rxjs';
         DatepickerEditorComponent,
         DetailsButtonComponent,
         DetailsReleaseComponent,
+        EditReleaseComponent,
 
     ],
     exports: [

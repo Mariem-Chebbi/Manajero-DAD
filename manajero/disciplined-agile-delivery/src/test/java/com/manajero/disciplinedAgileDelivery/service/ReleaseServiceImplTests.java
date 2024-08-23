@@ -1,6 +1,8 @@
 package com.manajero.disciplinedAgileDelivery.service;
+import com.manajero.disciplinedAgileDelivery.models.Feature;
 import com.manajero.disciplinedAgileDelivery.models.Project;
 import com.manajero.disciplinedAgileDelivery.models.Release;
+import com.manajero.disciplinedAgileDelivery.repository.FeatureRepository;
 import com.manajero.disciplinedAgileDelivery.repository.ProjectRepository;
 import com.manajero.disciplinedAgileDelivery.repository.ReleaseRepository;
 import com.manajero.disciplinedAgileDelivery.services.ReleaseServiceImpl;
@@ -24,6 +26,9 @@ public class ReleaseServiceImplTests {
 
     @Mock
     private ProjectRepository projectRepository;
+
+    @Mock
+    private FeatureRepository featureRepository;
 
     @InjectMocks
     private ReleaseServiceImpl releaseService;
@@ -122,5 +127,74 @@ public class ReleaseServiceImplTests {
         // Assert
         assertThat(retrievedRelease).isNotNull();
         assertThat(retrievedRelease.getName()).isEqualTo("Release 1.0");
+    }
+
+    @Test
+    public void calculateReleasePredictability_ReturnsCorrectPredictability() {
+        // Arrange
+        Release onTimeRelease = new Release();
+        onTimeRelease.setStatus("Released");
+        onTimeRelease.setIsArchived(false);
+
+        List<Release> releases = new ArrayList<>();
+        releases.add(onTimeRelease);
+        releases.add(release);
+
+        when(releaseRepository.findAllByProject_ProjectId(project.getProjectId())).thenReturn(releases);
+
+        // Act
+        double predictability = releaseService.calculateReleasePredictability(project.getProjectId());
+
+        // Assert
+        assertThat(predictability).isEqualTo(50.0);
+    }
+
+    @Test
+    public void archiveRelease_SetsIsArchivedToTrue() {
+        // Arrange
+        when(releaseRepository.findById(release.getReleaseId())).thenReturn(Optional.of(release));
+
+        // Act
+        releaseService.archiveRelease(release.getReleaseId());
+
+        // Assert
+        assertThat(release.getIsArchived()).isTrue();
+        verify(releaseRepository, times(1)).save(release);
+    }
+
+    @Test
+    public void restoreRelease_SetsIsArchivedToFalse() {
+        // Arrange
+        release.setIsArchived(true);
+        when(releaseRepository.findById(release.getReleaseId())).thenReturn(Optional.of(release));
+
+        // Act
+        releaseService.restoreRelease(release.getReleaseId());
+
+        // Assert
+        assertThat(release.getIsArchived()).isFalse();
+        verify(releaseRepository, times(1)).save(release);
+    }
+
+    @Test
+    public void calculateReleaseProgress_ReturnsCorrectProgress() {
+        // Arrange
+        Feature doneFeature = new Feature();
+        doneFeature.setStatus("Done");
+
+        List<Feature> features = new ArrayList<>();
+        features.add(doneFeature);
+        features.add(new Feature());
+
+        when(featureRepository.findAllByRelease_ReleaseId(release.getReleaseId())).thenReturn(features);
+        when(releaseRepository.save(any(Release.class))).thenReturn(release);
+
+        // Act
+        float progress = releaseService.calculateReleaseProgress(release);
+
+        // Assert
+        assertThat(progress).isEqualTo(50.0f);
+        assertThat(release.getProgres()).isEqualTo(50.0f);
+        verify(releaseRepository, times(1)).save(release);
     }
 }

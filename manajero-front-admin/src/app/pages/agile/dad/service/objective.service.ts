@@ -30,11 +30,14 @@ export class ObjectiveService {
   }
 
   public archive(id): Observable<any> {
-    return this.http.put<any>(`${this.apiurl}/archive/${id}`,null);
+    return this.http.put<any>(`${this.apiurl}/archive/${id}`, null);
   }
 
   public restore(id): Observable<any> {
-    return this.http.put<any>(`${this.apiurl}/restore/${id}`,null);
+    return this.http.put<any>(`${this.apiurl}/restore/${id}`, null);
   }
 
+  public getById(id): Observable<any> {
+    return this.http.get<any>(`${this.apiurl}/get/${id}`);
+  }
 }

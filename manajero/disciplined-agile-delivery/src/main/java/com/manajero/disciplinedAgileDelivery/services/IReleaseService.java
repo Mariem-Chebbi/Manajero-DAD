@@ -13,5 +13,6 @@ public interface IReleaseService {
     double calculateReleasePredictability(String projectId);
     void archiveRelease(String id);
     void restoreRelease(String id);
+    float calculateReleaseProgress(Release release);
 
 }

@@ -20,5 +20,7 @@ public class Iteration {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
     private Project project;
+
 }

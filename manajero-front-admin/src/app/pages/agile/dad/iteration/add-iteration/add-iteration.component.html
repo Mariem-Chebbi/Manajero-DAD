@@ -19,5 +19,8 @@
     <div *ngIf="addForm.get('endDate').invalid && (addForm.get('endDate').dirty || addForm.get('endDate').touched)">
         <div *ngIf="addForm.get('endDate').errors.required"><small>End date is required.</small></div>
     </div>
+    <div *ngIf="addForm.errors?.dateRangeInvalid && (addForm.dirty || addForm.touched)">
+        <small class="error-message">Start Date must be earlier than End Date.</small>
+    </div>
     <button class="my-3" nbButton hero status="primary" [disabled]="addForm.invalid" (click)="onSubmit()">Save</button>
 </form>

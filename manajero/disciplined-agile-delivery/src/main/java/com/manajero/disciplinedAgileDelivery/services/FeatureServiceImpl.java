@@ -72,11 +72,9 @@ public class FeatureServiceImpl implements IFeatureService{
     }
 
     @Override
-    public void UnassignFeaturesToIteration(List<Feature> features) {
-        for (Feature feature: features){
+    public void UnassignFeaturesToIteration(Feature feature) {
             feature.setIteration(null);
             featureRepository.save(feature);
-        }
     }
 
     @Override

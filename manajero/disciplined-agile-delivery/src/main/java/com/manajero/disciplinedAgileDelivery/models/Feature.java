@@ -23,5 +23,6 @@ public class Feature {
     private Release release;
     private User user;
     private Iteration iteration;
+    private Objective objective;
     private Boolean isArchived;
 }

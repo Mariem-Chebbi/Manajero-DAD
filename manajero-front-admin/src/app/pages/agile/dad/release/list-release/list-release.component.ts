@@ -5,6 +5,9 @@ import { PrimeNGConfig } from 'primeng/api';
 import { ReleaseService } from '../../service/release.service';
 import { DatepickerEditorComponent } from '../datepicker-editor/datepicker-editor.component';
 import { DetailsButtonComponent } from '../details-button/details-button.component';
+import { NbDialogService, NbToastrService, NbWindowService } from '@nebular/theme';
+import { AddReleaseComponent } from '../add-release/add-release.component';
+import { EditReleaseComponent } from '../edit-release/edit-release.component';
 
 
 @Component({
@@ -16,73 +19,15 @@ export class ListReleaseComponent implements OnInit {
 
   projectId: string;
   releaseList: any[];
-  settings = {
-    add: {
-      addButtonContent: '<i class="nb-plus"></i>',
-      createButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmCreate: true,
-    },
-    edit: {
-      editButtonContent: '<i class="nb-edit"></i>',
-      saveButtonContent: '<i class="nb-checkmark"></i>',
-      cancelButtonContent: '<i class="nb-close"></i>',
-      confirmSave: true,
-    },
-    delete: {
-      deleteButtonContent: '<i class="nb-trash"></i>',
-      confirmDelete: true,
-    },
-    columns: {
-      name: {
-        title: 'Name',
-        type: 'string',
-      },
-      status: {
-        title: 'Status',
-        type: 'string',
-        editable: false,
-        addable: false
-      },
-      progres: {
-        title: 'Progress',
-        type: 'number',
-      },
-      startDate: {
-        title: 'Start Date',
-        renderComponent: DatepickerEditorComponent,
-        editor: {
-          type: 'custom',
-          component: DatepickerEditorComponent,
-        },
-        valuePrepareFunction: (date) => {
-          return this.formatDate(date);
-        },
-      },
-      releaseDate: {
-        title: 'Release Date',
-        renderComponent: DatepickerEditorComponent,
-        editor: {
-          type: 'custom',
-          component: DatepickerEditorComponent,
-        },
-        valuePrepareFunction: (date) => {
-          return this.formatDate(date);
-        },
-      },
-      description: {
-        title: 'Description',
-        type: 'string',
-      },
-
-    }
-  };
-
 
   constructor(
     private releaseService: ReleaseService,
     private route: ActivatedRoute,
     private router: Router,
+    private windowService: NbWindowService,
+    private dialogService: NbDialogService,
+    private toastrService: NbToastrService
+
   ) {
     this.route.paramMap.subscribe(params => {
       this.projectId = params.get('id'); // No conversion needed for string IDs
@@ -161,22 +106,47 @@ export class ListReleaseComponent implements OnInit {
     }
   }
 
-  onDeleteConfirm(event): void {
+  onDeleteConfirm(release): void {
     if (window.confirm('Are you sure you want to delete this release?')) {
-      const releaseToDelete = event.data;
-      this.releaseService.archive(releaseToDelete.releaseId).subscribe(
+      this.releaseService.archive(release.releaseId).subscribe(
         () => {
-          event.confirm.resolve();
           this.getAllReleases();
-        },
-        () => {
-          event.confirm.reject();
         }
-      );
-    } else {
-      event.confirm.reject();
-    }
+      )
+    };
   }
+
+  openWindowAdd() {
+    const windowRef = this.windowService.open(AddReleaseComponent, {
+      title: 'Add release',
+      context: {
+        projectId: this.projectId,
+      },
+    });
+
+    windowRef.onClose.subscribe((data) => {
+      if (data) {
+        this.releaseList.push(data); // Update the list of objectives with the new data
+      }
+    });
+  }
+
+  openWindowEdit(release) {
+    const windowRef = this.windowService.open(EditReleaseComponent, {
+      title: 'Edit release',
+      context: {
+        projectId: this.projectId,
+        release: release
+      },
+    });
+
+    windowRef.onClose.subscribe((data) => {
+      if (data) {
+        this.getAllReleases(); // Update the list of objectives with the new data
+      }
+    });
+  }
+
 
 
 
@@ -212,9 +182,8 @@ export class ListReleaseComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  onRowClick(event): void {
-    const releaseId = event.data.releaseId;
-    this.router.navigate([`/pages/agile/dad/release/details/${this.projectId}/${releaseId}`]);
+  onRowClick(release): void {
+    this.router.navigate([`/pages/agile/dad/release/details/${this.projectId}/${release.releaseId}`]);
   }
 
 

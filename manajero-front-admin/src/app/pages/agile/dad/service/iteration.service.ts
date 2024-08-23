@@ -20,4 +20,29 @@ export class IterationService {
   public getAll(id): Observable<any> {
     return this.http.get<any>(`${this.apiurl}/getAll/${id}`);
   }
+
+  public edit(obj): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/edit`, obj);
+  }
+
+  public delete(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiurl}/delete/${id}`);
+  }
+
+  public getById(id): Observable<any> {
+    return this.http.get<any>(`${this.apiurl}/get/${id}`);
+  }
+
+  public startIteration(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/start/${id}`, null);
+  }
+
+  public finishIteration(id): Observable<any> {
+    return this.http.put<any>(`${this.apiurl}/finish/${id}`, null);
+  }
+
+  public checkStatus(id): Observable<any> {
+    return this.http.get<any>(`${this.apiurl}/checkStatus/${id}`);
+  }
+  
 }

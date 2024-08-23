@@ -52,4 +52,9 @@ public class ObjectifServiceImpl implements IObjectiveService {
         objective.setIsArchived(false);
         objectiveRepository.save(objective);
     }
+
+    @Override
+    public Objective getObjectifById(String id) {
+        return objectiveRepository.findById(id).orElse(null);
+    }
 }

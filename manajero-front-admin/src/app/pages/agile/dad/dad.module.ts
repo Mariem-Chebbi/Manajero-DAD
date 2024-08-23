@@ -29,6 +29,7 @@ import { ListIterationComponent } from './iteration/list-iteration/list-iteratio
 import { AddIterationComponent } from './iteration/add-iteration/add-iteration.component';
 import { ListFeaturesIterationComponent } from './iteration/list-features-iteration/list-features-iteration.component';
 import { ListArchiveComponent } from './archives/list-archive/list-archive.component';
+import { EditIterationComponent } from './iteration/edit-iteration/edit-iteration.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -72,6 +73,7 @@ import { ListArchiveComponent } from './archives/list-archive/list-archive.compo
         AddIterationComponent,
         ListFeaturesIterationComponent,
         ListArchiveComponent,
+        EditIterationComponent,
 
     ]
 })
